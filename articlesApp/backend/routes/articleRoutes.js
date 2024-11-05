@@ -1,17 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const {
-  getAllArticles,
-  getArticleById,
-  createArticle,
-  updateArticle,
-  deleteArticle
-} = require('../controllers/articleController');
+const { searchArticles } = require('../controllers/articleController');
 
-router.get('/api/articles', getAllArticles);
-router.get('/api/articles/:id', getArticleById);
-router.post('/api/articles', createArticle);
-router.put('/api/articles/:id', updateArticle);
-router.delete('/api/articles/:id', deleteArticle);
+// Route to handle search requests
+router.get('/api/search', searchArticles);
 
 module.exports = router;

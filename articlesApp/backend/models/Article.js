@@ -1,50 +1,44 @@
-const { Model, DataTypes, Sequelize } = require('sequelize');
+const { Sequelize, Model, DataTypes } = require('sequelize');
+
 const sequelize = new Sequelize('articles', 'root', 'root', {
   host: 'db',
   port: 3306,
   dialect: 'mysql',
-  logging: false,
+  define: {
+    timestamps: false
+  }
 });
 
 class Article extends Model {
   static init(sequelize) {
     super.init({
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
           notEmpty: true,
-        },
+        }
       },
       summary: {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
           notEmpty: true,
-        },
+        }
       },
-      thumbnail: {
+      url: {
         type: DataTypes.STRING,
-        allowNull: true,
-      },
-      date: {
-        type: DataTypes.DATE,
         allowNull: false,
+        validate: {
+          isUrl: true,
+        }
       },
     }, {
       sequelize,
       modelName: 'Article',
-      tableName: 'articles',
-      timestamps: false,
+      tableName: 'articles'
     });
   }
 }
-
-Article.init(sequelize);
 
 module.exports = Article;
